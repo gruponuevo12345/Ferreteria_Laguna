@@ -128,6 +128,8 @@ const Encabezado = () => {
             <hr />
           </Nav>
 
+
+
           {/* Información de usuario y botón cerrar sesión */}
           {mostrarMenu && (
             <div className="mt-3 p-3 rounded bg-light text-dark">
