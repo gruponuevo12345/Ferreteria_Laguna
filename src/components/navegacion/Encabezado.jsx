@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { supabase } from "../../database/supabaseconfig"
-import logo from "../../assets/logo.png";
+import Logo from "../../assets/Logo.png";
 
 
 
@@ -164,7 +164,7 @@ const Encabezado = () => {
         >
           <img
             alt=""
-            src={logo}
+            src={Logo}
             width="45"
             height="45"
             className="d-inline-block me-2"
