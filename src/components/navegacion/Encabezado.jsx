@@ -173,7 +173,7 @@ const Encabezado = () => {
             className="d-inline-block me-2"
           />
           <strong>
-            <h4 className="mb-0">Discosa</h4>
+            <h4 className="mb-0">Ferretería Laguna</h4>
           </strong>
         </Navbar.Brand>
 
@@ -193,7 +193,7 @@ const Encabezado = () => {
           onHide={() => setMostrarMenu(false)}
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Menú Discosa</Offcanvas.Title>
+            <Offcanvas.Title>Menú Ferrretería Laguna</Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>
