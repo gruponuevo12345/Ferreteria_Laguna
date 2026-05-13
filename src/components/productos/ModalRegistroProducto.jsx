@@ -110,13 +110,10 @@ const ModalRegistroProducto = ({
                />
              </Form.Group>
            </Col>
-         </Row>
-       </Form>
-     </Modal.Body>
 
-     {/* Columna: Precio de venta */}
+           {/* Columna: Precio de stock */}
            <Col xs={12}>
-             <Form.Group className="mb-3">
+             <Form.Group className=" mb-3">
                <Form.Label>Stock </Form.Label>
                <Form.Control
                  type="number"
@@ -130,6 +127,10 @@ const ModalRegistroProducto = ({
                />
              </Form.Group>
            </Col>
+           
+         </Row>
+       </Form>
+     </Modal.Body>
 
      <Modal.Footer>
        <Button variant="secondary" onClick={() => setMostrarModal(false)}>
