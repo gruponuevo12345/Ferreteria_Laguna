@@ -31,6 +31,7 @@ const ModalRegistroCategoria = ({
       </Modal.Header>
       <Modal.Body>
         <Form>
+          
           <Form.Group className="mb-3">
             <Form.Label>Nombre</Form.Label>
             <Form.Control
@@ -41,6 +42,7 @@ const ModalRegistroCategoria = ({
               placeholder="Ingresa el nombre"
             />
           </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Descripción</Form.Label>
             <Form.Control
@@ -52,6 +54,7 @@ const ModalRegistroCategoria = ({
               placeholder="Ingresa la descripción"
             />
           </Form.Group>
+
         </Form>
       </Modal.Body>
       <Modal.Footer>

@@ -3,23 +3,23 @@ import { Table, Spinner, Button } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { supabase } from "../../database/supabaseconfig";
 
-const TablaCategorias = ({ categorias, abrirModalEdicion, abrirModalEliminacion, generarPDFCategoria }) => {
+const TablaClientes = ({ clientes, abrirModalEdicion, abrirModalEliminacion }) => {
 
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (categorias && categorias.length > 0) {
+        if (clientes && clientes.length > 0) {
             setLoading(false);
         } else {
             setLoading(true);
         }
-    }, [categorias]);
+    }, [clientes]);
 
     return (
         <>
             {loading ? (
                 <div className="text-center">
-                    <h4>Cargando categorías...</h4>
+                    <h4>Cargando clientes...</h4>
                     <Spinner animation="border" variant="success" role="status" />
                 </div>
             ) : (
@@ -27,23 +27,35 @@ const TablaCategorias = ({ categorias, abrirModalEdicion, abrirModalEliminacion,
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
+                            <th>primer_nombre</th>
+                            <th>segundo_nombre</th>
+                            <th>primer_apellido</th>
+                            <th>segundo_apellido</th>
+                            <th>celular</th>
+                             <th>direccion</th>
+                              <th>cedula</th>
                             <th className="d-none d-md-table-cell">Descripción</th>
                             <th className="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {categorias.map((categoria) => (
-                            <tr key={categoria.id_categoria}>
-                                <td>{categoria.id_categoria}</td>
-                                <td>{categoria.nombre_categoria}</td>
-                                <td className="d-none d-md-table-cell">{categoria.descripcion_categoria}</td>
+                        {clientes.map((cliente) => (
+                            <tr key={cliente.id_cliente}>
+                                <td>{cliente.id_cliente}</td>
+                                <td>{cliente.primer_nombre}</td>
+                                <td>{cliente.segundo_nombre}</td>
+                                <td>{cliente.primer_apellido}</td>
+                                <td>{cliente.segundo_apellido}</td>
+                                <td>{cliente.celular}</td>
+                                <td>{cliente.direccion}</td>
+                                <td>{cliente.cedula}</td>
+                                <td className="d-none d-md-table-cell">{cliente.primer_nombre}</td>
                                 <td className="text-center">
                                     <Button
                                         variant="outline-warning"
                                         size="sm"
                                         className="m-1"
-                                        onClick={() => abrirModalEdicion(categoria)}
+                                        onClick={() => abrirModalEdicion(cliente)}
                                     >
                                         <i className="bi bi-pencil"></i>
                                     </Button>
@@ -51,21 +63,11 @@ const TablaCategorias = ({ categorias, abrirModalEdicion, abrirModalEliminacion,
                                     <Button
                                         variant="outline-danger"
                                         size="sm"
-                                        onClick={() => abrirModalEliminacion(categoria)}
+                                        onClick={() => abrirModalEliminacion(cliente)}
                                     >
 
                                         <i className="bi bi-trash"></i>
                                     </Button>
-
-                                    <Button
-                                        variant="outline-primary"
-                                        size="sm"
-                                        className="m-1"
-                                        onClick={() => generarPDFCategoria(categoria)}
-                                    >
-                                        <i className="bi bi-file-earmark-pdf"></i>
-                                    </Button>
-
                                 </td>
                             </tr>
                         ))
@@ -76,4 +78,4 @@ const TablaCategorias = ({ categorias, abrirModalEdicion, abrirModalEliminacion,
     );
 };
 
-export default TablaCategorias;
+export default TablaClientes;
