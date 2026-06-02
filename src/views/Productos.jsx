@@ -10,6 +10,9 @@ import ModalEliminacionProducto from "../components/productos/ModalEliminacionPr
 import TarjetaProductos from "../components/productos/TarjetasProductos";
 import Paginacion from "../components/ordenamiento/Paginacion";
 
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
 const Productos = () => {
   const [toast, setToast] = useState({ mostrar: false, mensaje: "", tipo: "" });
 
@@ -27,9 +30,9 @@ const Productos = () => {
   const [mostrarModal, setMostrarModal] = useState(false);
 
   const productosPaginados = productosFiltrados.slice(
-  (paginaActual - 1) * registrosPorPagina,
-  paginaActual * registrosPorPagina
-);
+    (paginaActual - 1) * registrosPorPagina,
+    paginaActual * registrosPorPagina
+  );
 
 
   const [nuevoProducto, setNuevoProducto] = useState({
@@ -52,14 +55,45 @@ const Productos = () => {
     archivo: null,
   });
 
+
+  const generarPDFProducto = (producto) => {
+
+    const doc = new jsPDF();
+
+    // Título
+    doc.setFontSize(18);
+    doc.text("Reporte de Producto", 14, 20);
+
+    // Línea decorativa
+    doc.line(14, 25, 195, 25);
+
+    // Información del producto
+    doc.setFontSize(12);
+
+    autoTable(doc, {
+      startY: 35,
+      head: [["Campo", "Valor"]],
+      body: [
+        ["ID", categoria.id_categoria],
+        ["Nombre", categoria.nombre_categoria],
+        ["Descripción", categoria.descripcion_categoria],
+      ],
+    });
+
+    // Descargar PDF
+    doc.save(`categoria_${categoria.id_categoria}.pdf`);
+  };
+
+
   const manejoCambioInputEdicion = (e) => {
     const { name, value } = e.target;
-    setProductoEditar((prev) => ({...prev,[name]: value,
+    setProductoEditar((prev) => ({
+      ...prev, [name]: value,
     }));
   };
 
   const manejoCambioArchivoActualizar = (e) => {
-    const archivo = e.target.files[0]; 
+    const archivo = e.target.files[0];
     if (archivo && archivo.type.startsWith("image/")) {
       setProductoEditar((prev) => ({ ...prev, archivo }));
     } else {
@@ -84,6 +118,8 @@ const Productos = () => {
   const manejarCambioBusqueda = (e) => {
     setTextoBusqueda(e.target.value);
   };
+
+
 
   useEffect(() => {
     if (!textoBusqueda.trim()) {
@@ -129,79 +165,79 @@ const Productos = () => {
   };
 
   const actualizarProducto = async () => {
-  try {
-    if (
-      !productoEditar.nombre_producto.trim() ||
-      !productoEditar.id_categoria ||
-      !productoEditar.precio_unitario ||
-      !productoEditar.stock
-    ) {
-      setToast({
-        mostrar: true,
-        mensaje: "Completa los campos obligatorios",
-        tipo: "advertencia",
-      });
-      return;
-    }
-
-    setMostrarModalEdicion(false);
-
-    let datosActualizados = {
-      nombre_producto: productoEditar.nombre_producto,
-      descripcion_producto: productoEditar.descripcion_producto || null,
-      id_categoria: productoEditar.id_categoria,
-      precio_unitario: parseFloat(productoEditar.precio_unitario),
-      stock: parseInt(productoEditar.stock, 10),  
-      url_imagen: productoEditar.url_imagen,
-    };
-
-    if (productoEditar.archivo) {
-      const nombreArchivo = `${Date.now()}_${productoEditar.archivo.name}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("imagenes_productos")
-        .upload(nombreArchivo, productoEditar.archivo);
-
-      if (uploadError) throw uploadError;
-
-      const { data: urlData } = supabase.storage
-        .from("imagenes_productos")
-        .getPublicUrl(nombreArchivo);
-
-      datosActualizados.url_imagen = urlData.publicUrl;
-
-      if (productoEditar.url_imagen) {
-        const nombreAnterior = productoEditar.url_imagen.split("/").pop().split("?")[0];
-        await supabase.storage.from("imagenes_productos").remove([nombreAnterior]).catch(() => {});
+    try {
+      if (
+        !productoEditar.nombre_producto.trim() ||
+        !productoEditar.id_categoria ||
+        !productoEditar.precio_unitario ||
+        !productoEditar.stock
+      ) {
+        setToast({
+          mostrar: true,
+          mensaje: "Completa los campos obligatorios",
+          tipo: "advertencia",
+        });
+        return;
       }
+
+      setMostrarModalEdicion(false);
+
+      let datosActualizados = {
+        nombre_producto: productoEditar.nombre_producto,
+        descripcion_producto: productoEditar.descripcion_producto || null,
+        id_categoria: productoEditar.id_categoria,
+        precio_unitario: parseFloat(productoEditar.precio_unitario),
+        stock: parseInt(productoEditar.stock, 10),
+        url_imagen: productoEditar.url_imagen,
+      };
+
+      if (productoEditar.archivo) {
+        const nombreArchivo = `${Date.now()}_${productoEditar.archivo.name}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("imagenes_productos")
+          .upload(nombreArchivo, productoEditar.archivo);
+
+        if (uploadError) throw uploadError;
+
+        const { data: urlData } = supabase.storage
+          .from("imagenes_productos")
+          .getPublicUrl(nombreArchivo);
+
+        datosActualizados.url_imagen = urlData.publicUrl;
+
+        if (productoEditar.url_imagen) {
+          const nombreAnterior = productoEditar.url_imagen.split("/").pop().split("?")[0];
+          await supabase.storage.from("imagenes_productos").remove([nombreAnterior]).catch(() => { });
+        }
+      }
+
+      const { error } = await supabase
+        .from("productos")
+        .update(datosActualizados)
+        .eq("id_producto", productoEditar.id_producto);
+
+      if (error) throw error;
+
+      await cargarProductos();
+
+      setProductoEditar({
+        id_producto: "",
+        nombre_producto: "",
+        descripcion_producto: "",
+        id_categoria: "",
+        precio_unitario: "",
+        stock: "",
+        url_imagen: "",
+        archivo: null,
+      });
+
+      setToast({ mostrar: true, mensaje: "Producto actualizado correctamente", tipo: "exito" });
+    } catch (err) {
+      console.error("Error al actualizar:", err);
+      setToast({ mostrar: true, mensaje: "Error al actualizar producto", tipo: "error" });
     }
-
-    const { error } = await supabase
-      .from("productos")
-      .update(datosActualizados)
-      .eq("id_producto", productoEditar.id_producto);
-
-    if (error) throw error;
-
-    await cargarProductos();
-
-    setProductoEditar({
-      id_producto: "",
-      nombre_producto: "",
-      descripcion_producto: "",
-      id_categoria: "",
-      precio_unitario: "",
-      stock: "",
-      url_imagen: "",
-      archivo: null,
-    });
-
-    setToast({ mostrar: true, mensaje: "Producto actualizado correctamente", tipo: "exito" });
-  } catch (err) {
-    console.error("Error al actualizar:", err);
-    setToast({ mostrar: true, mensaje: "Error al actualizar producto", tipo: "error" });
-  }
-};
+  };
 
   const eliminarProducto = async () => {
     if (!productoAEliminar) return;
@@ -381,14 +417,14 @@ const Productos = () => {
       </Row>
 
       <Col xs={12} md={12} lg={12}>
-  {/* Spinner de carga de productos */}
-  {cargando && (
-    <div className="text-center my-5">
-      <Spinner animation="border" variant="success" size="lg" />
-      <p className="mt-3 text-muted">Cargando productos...</p>
-    </div>
-  )}
-</Col>
+        {/* Spinner de carga de productos */}
+        {cargando && (
+          <div className="text-center my-5">
+            <Spinner animation="border" variant="success" size="lg" />
+            <p className="mt-3 text-muted">Cargando productos...</p>
+          </div>
+        )}
+      </Col>
 
 
       {/* Mensaje de no coincidencias solo cuando hay búsqueda y no hay resultados */}

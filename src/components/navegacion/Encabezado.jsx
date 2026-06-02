@@ -121,6 +121,15 @@ const Encabezado = () => {
               <strong>Empleados</strong>
             </Nav.Link>
 
+            {/* Opción para ir a ventas desde admin */}
+            <Nav.Link
+              onClick={() => manejarNavegacion("/ventas")}
+              className={mostrarMenu ? "color-texto-marca" : "text-white"}
+            >
+              {mostrarMenu ? <i className="bi-person-lines-fill me-2"></i> : null}
+              <strong>Ventas</strong>
+            </Nav.Link>
+
             <hr />
 
             {/* Ícono cerrar sesión en barra superior */}
