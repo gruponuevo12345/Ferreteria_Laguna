@@ -3,10 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { supabase } from "../../database/supabaseconfig"
 import Logo from "../../assets/Logo.png";
+import ChatIA from "../ia/ChatIA";
 
 
 
 const Encabezado = () => {
+
+  const [mostrarChatIA, setMostrarChatIA] = useState(false);
 
   const [mostrarMenu, setMostrarMenu] = useState(false);
   const navigate = useNavigate();
@@ -130,6 +133,11 @@ const Encabezado = () => {
               <strong>Ventas</strong>
             </Nav.Link>
 
+            <Nav.Link onClick={() => setMostrarChatIA(true)} className="text-white">
+              <i className="bi bi-robot me-2"></i>
+            </Nav.Link>
+
+
             <hr />
 
             {/* Ícono cerrar sesión en barra superior */}
@@ -171,7 +179,7 @@ const Encabezado = () => {
 
 
   return (
-    <Navbar expand="md" fixed="top" className="color-navbar shadow-lg" variant="dark">
+    <><Navbar expand="md" fixed="top" className="color-navbar shadow-lg" variant="dark">
       <Container>
 
         <Navbar.Brand
@@ -217,6 +225,9 @@ const Encabezado = () => {
 
       </Container>
     </Navbar>
+
+  <ChatIA mostrar={mostrarChatIA} onCerrar={() => setMostrarChatIA(false)}/></>
+
   );
 
 };
