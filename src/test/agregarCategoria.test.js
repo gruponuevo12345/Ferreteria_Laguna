@@ -25,15 +25,16 @@ describe("Pruebas unitarias - Módulo Categorías", () => {
     expect(resultado.mensaje).toContain("El nombre de la categoría es obligatorio");
   });
 
-  // PRUEBA 3: Estado vacío (OR)
-  it("Prueba 3: Debe registrar si cumple al menos con el nombre válido aunque falte el estado", () => {
-    const categoria = {
-      nombre_categoria: 'Machete',
-      estado: ''
-    };
+it("Prueba 3: No debe permitir el registro si el estado está vacío", () => {
+  const categoria = {
+    nombre_categoria: 'Machete',
+    estado: ''
+  };
 
-    const resultado = agregarCategoria(categoria);
-    expect(resultado.valido).toBe(true);
-  });
+  const resultado = agregarCategoria(categoria);
+
+  expect(resultado.valido).toBe(false);
+  expect(resultado.mensaje).toContain("El estado es obligatorio");
+});
 
 });

@@ -25,15 +25,16 @@ describe("Pruebas unitarias - Módulo Clientes", () => {
     expect(resultado.mensaje).toContain("El nombre es obligatorio");
   });
 
-  // PRUEBA 3: Condición alternativa válida (OR)
-  it("Prueba 3: Debe validar el registro si cumple al menos una condición correcta", () => {
+    // PRUEBA 3: Teléfono vacío
+  it("Prueba 3: No debe permitir el registro si el teléfono está vacío", () => {
     const cliente = {
       nombre: 'Ana',
-      telefono: '84380547'
+      telefono: ''
     };
 
     const resultado = agregarCliente(cliente);
-    expect(resultado.valido).toBe(true);
-  });
 
-});
+    expect(resultado.valido).toBe(false);
+    expect(resultado.mensaje).toContain("El teléfono es obligatorio");
+  });
+  });

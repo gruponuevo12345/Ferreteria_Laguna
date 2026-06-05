@@ -13,31 +13,29 @@ describe("Pruebas unitarias - Módulo Ventas (Cantidades y Totales)", () => {
     expect(resultado.valido).toBe(true);
   });
 
-  // PRUEBA 2: Cantidad en cero bajo evaluación AND estricta
-  it("Prueba 2: No debe permitir el registro bajo condición AND si la cantidad es 0", () => {
-    const venta = {
-      cantidad: 0,
-      total: 500
-    };
-    
-    // Forzamos la simulación del comportamiento de tu segunda fila (AND estricto)
-    const resultado = venta.cantidad > 0 && venta.total > 0 
-      ? { valido: true } 
-      : { valido: false, mensaje: "La cantidad debe ser mayor que 0" };
+// Valores negativos
+it("No debe registrar cantidades negativas", () => {
+  const venta = {
+    cantidad: -5,
+    total: -100
+  };
 
-    expect(resultado.valido).toBe(false);
-    expect(resultado.mensaje).toContain("La cantidad debe ser mayor que 0");
-  });
+  const resultado = agregarVenta(venta);
 
-  // PRUEBA 3: Condición OR (Vale porque el total es correcto)
-  it("Prueba 3: Debe registrar si cumple al menos con el total válido (OR)", () => {
-    const venta = {
-      cantidad: 0,
-      total: 500
-    };
-
-    const resultado = agregarVenta(venta);
-    expect(resultado.valido).toBe(true);
-  });
-
+  expect(resultado.valido).toBe(false);
 });
+    
+ 
+
+  // Cantidad válida pero total en 0
+it("No debe registrar si el total es 0", () => {
+  const venta = {
+    cantidad: 5,
+    total: 0
+  };
+
+  const resultado = agregarVenta(venta);
+
+  expect(resultado.valido).toBe(false);
+});
+  });
