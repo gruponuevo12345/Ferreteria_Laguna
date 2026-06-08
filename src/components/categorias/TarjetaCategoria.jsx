@@ -5,7 +5,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 const TarjetaCategoria = ({
     categorias,
     abrirModalEdicion,
-    abrirModalEliminacion
+    abrirModalEliminacion,
 }) => {
 
     const [cargando, setCargando] = useState(true);

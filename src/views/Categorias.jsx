@@ -108,6 +108,34 @@ const Categorias = () => {
     setMostrarModalEliminacion(true);
   };
 
+  const copiarCategoria = async (categoria) => {
+  if (!categoria) return;
+
+  const texto = `
+ID: ${categoria.id_categoria}
+Nombre: ${categoria.nombre_categoria}
+Descripción: ${categoria.descripcion_categoria}
+`;
+
+  try {
+    await navigator.clipboard.writeText(texto);
+
+    setToast({
+      mostrar: true,
+      mensaje: `Categoría "${categoria.nombre_categoria}" copiada al portapapeles`,
+      tipo: "exito",
+    });
+  } catch (err) {
+    console.error("Error al copiar:", err);
+
+    setToast({
+      mostrar: true,
+      mensaje: "No se pudo copiar al portapapeles",
+      tipo: "error",
+    });
+  }
+};
+
 
   const cargarCategorias = async () => {
     try {
@@ -123,6 +151,9 @@ const Categorias = () => {
           mensaje: "Error al cargar categorías.",
           tipo: "error",
         });
+
+
+
         return;
       }
       setCategorias(data || []);
@@ -141,9 +172,6 @@ const Categorias = () => {
   useEffect(() => {
     cargarCategorias();
   }, []);
-
-
-
 
 
   const manejoCambioInputEdicion = (e) => {
@@ -387,6 +415,7 @@ const Categorias = () => {
               categorias={categoriasPaginadas}
               abrirModalEdicion={abrirModalEdicion}
               abrirModalEliminacion={abrirModalEliminacion}
+              copiarCategoria={copiarCategoria}
             />
           </Col>
           <Col lg={12} className="d-none d-lg-block">
@@ -395,6 +424,7 @@ const Categorias = () => {
               abrirModalEdicion={abrirModalEdicion}
               abrirModalEliminacion={abrirModalEliminacion}
               generarPDFCategoria={generarPDFCategoria}
+              copiarCategoria={copiarCategoria}
             />
           </Col>
         </Row>

@@ -12,6 +12,7 @@ import Paginacion from "../components/ordenamiento/Paginacion";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import ModalQRProducto from "../components/productos/ModalQRProducto";
 
 const Productos = () => {
   const [toast, setToast] = useState({ mostrar: false, mensaje: "", tipo: "" });
@@ -28,6 +29,9 @@ const Productos = () => {
 
   const [categorias, setCategorias] = useState([]);
   const [mostrarModal, setMostrarModal] = useState(false);
+
+  const [mostrarModalQR, setMostrarModalQR] = useState(false);
+  const [productoQR, setProductoQR] = useState(null);
 
   const productosPaginados = productosFiltrados.slice(
     (paginaActual - 1) * registrosPorPagina,
@@ -164,6 +168,20 @@ const Productos = () => {
     setMostrarModalEliminacion(true);
   };
 
+  const generarQRImagen = (producto) => {
+    if (!producto?.url_imagen) {
+      setToast({
+        mostrar: true,
+        mensaje: "Este producto no tiene imagen asociada",
+        tipo: "advertencia"
+      });
+      return;
+    }
+
+    setProductoQR(producto);
+    setMostrarModalQR(true);
+  };
+
   const actualizarProducto = async () => {
     try {
       if (
@@ -177,6 +195,8 @@ const Productos = () => {
           mensaje: "Completa los campos obligatorios",
           tipo: "advertencia",
         });
+
+
         return;
       }
 
@@ -467,6 +487,9 @@ const Productos = () => {
               categorias={categorias}
               abrirModalEdicion={abrirModalEdicion}
               abrirModalEliminacion={abrirModalEliminacion}
+              generarQRImagen={generarQRImagen}
+
+
             />
           </Col>
         </Row>
@@ -501,6 +524,12 @@ const Productos = () => {
         setMostrarModalEliminacion={setMostrarModalEliminacion}
         eliminarProducto={eliminarProducto}
         productoAEliminar={productoAEliminar}
+      />
+
+      <ModalQRProducto
+        mostrar={mostrarModalQR}
+        onHide={() => setMostrarModalQR(false)}
+        producto={productoQR}
       />
 
       <NotificacionOperacion
