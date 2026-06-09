@@ -14,6 +14,11 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import ModalQRProducto from "../components/productos/ModalQRProducto";
 
+import ModalEnvioCorreoProductos from "../components/productos/ModalEnvioCorreoProductos";
+import emailjs from '@emailjs/browser';
+
+
+
 const Productos = () => {
   const [toast, setToast] = useState({ mostrar: false, mensaje: "", tipo: "" });
 
@@ -32,6 +37,11 @@ const Productos = () => {
 
   const [mostrarModalQR, setMostrarModalQR] = useState(false);
   const [productoQR, setProductoQR] = useState(null);
+
+  const [mostrarModalCorreo, setMostrarModalCorreo] = useState(false);
+const [emailDestino, setEmailDestino] = useState("");
+const [enviandoCorreo, setEnviandoCorreo] = useState(false);
+
 
   const productosPaginados = productosFiltrados.slice(
     (paginaActual - 1) * registrosPorPagina,
@@ -405,23 +415,126 @@ const Productos = () => {
     }
   };
 
+  // Inicializar EmailJS
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+  }, []);
+const abrirModalCorreo = () => {
+    setEmailDestino("");
+    setMostrarModalCorreo(true);
+  };
+
+  const formatearProductosParaCorreo = () => {
+    if (productos.length === 0) return "No hay productos registrados.";
+
+    let texto = `LISTADO DE PRODUCTOS\n\n`;
+    texto += `Fecha: ${new Date().toLocaleDateString("es-NI")}\n`;
+    texto += `Total de productos: ${productos.length}\n\n`;
+
+productos.forEach((prod, index) => {
+  texto += `${index + 1}. ${prod.nombre_producto}\n`;
+
+  if (prod.descripcion_producto) {
+    texto += `   Descripción: ${prod.descripcion_producto}\n`;
+  }
+
+  if (prod.id_categoria) {
+    texto += `   Categoría: ${prod.id_categoria}\n`;
+  }
+
+  if (prod.precio_unitario) {
+    texto += `   Precio Unitario: C$ ${prod.precio_unitario}\n`;
+  }
+
+  if (prod.stock) {
+    texto += `   Stock: ${prod.stock}\n`;
+  }
+
+  if (prod.archivo) {
+    texto += `   Imagen: ${prod.archivo}\n`;
+  }
+
+  texto += `\n`;
+});
+
+return texto;
+  };
+    const enviarCorreoProductos = () => {
+    if (!emailDestino.trim()) {
+      setToast({
+        mostrar: true,
+        mensaje: "Por favor ingresa un correo destino.",
+        tipo: "advertencia",
+      });
+      return;
+    }
+
+    setEnviandoCorreo(true);
+
+    const mensaje = formatearProductosParaCorreo();
+
+    const templateParams = {
+      to_name: "Administrador",
+      user_email: emailDestino,
+      message: mensaje,
+      fecha_envio: new Date().toLocaleDateString("es-NI")
+    };
+
+    emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      templateParams
+    )
+      .then(() => {
+        setToast({
+          mostrar: true,
+          mensaje: "Correo enviado correctamente.",
+          tipo: "exito",
+        });
+        setMostrarModalCorreo(false);
+        setEmailDestino("");
+      })
+      .catch((error) => {
+        console.error("Error EmailJS:", error);
+        setToast({
+          mostrar: true,
+          mensaje: "Error al enviar el correo.",
+          tipo: "error",
+        });
+      })
+      .finally(() => {
+        setEnviandoCorreo(false);
+      });
+  };
+
+
+
 
   return (
     <Container className="mt-3">
-      <Row className="align-items-center mb-3">
-        <Col className="d-flex align-items-center">
-          <h3 className="mb-0">
-            <i className="bi-bag-heart-fill me-2"></i> Productos
-          </h3>
-        </Col>
+<Row className="align-items-center mb-3">
+  <Col xs={8} sm={8} md={8} lg={8} className="d-flex align-items-center">
+    <h3 className="mb-0">
+      <i className="bi-bookmark-plus-fill me-2"></i> Produtos
+    </h3>
+  </Col>
+  <Col xs={2} sm={2} md={2} lg={2} className="text-end">
+    <Button variant="primary" onClick={abrirModalCorreo} size="md">
+      <i className="bi bi-envelope"></i>
+      <span className="d-none d-lg-inline ms-2">Enviar por Correo</span>
+    </Button>
+  </Col>
+  <Col xs={2} sm={2} md={2} lg={2} className="text-end">
+    <Button
+      onClick={() => setMostrarModal(true)}
+      size="md"
+    >
+      <i className="bi-plus-lg"></i>
+      <span className="d-none d-lg-inline ms-2">Nuevo Producto</span>
+    </Button>
+  </Col>
+</Row>
 
-        <Col xs={3} sm={5} md={5} lg={5} className="text-end">
-          <Button onClick={() => setMostrarModal(true)} size="md">
-            <i className="bi-plus-lg"></i>
-            <span className="d-none d-sm-inline ms-2">Nuevo Producto</span>
-          </Button>
-        </Col>
-      </Row>
 
       <hr />
 
@@ -538,6 +651,17 @@ const Productos = () => {
         tipo={toast.tipo}
         onCerrar={() => setToast({ ...toast, mostrar: false })}
       />
+
+<ModalEnvioCorreoProductos
+  mostrarModalCorreo={mostrarModalCorreo}
+  setMostrarModalCorreo={setMostrarModalCorreo}
+  emailDestino={emailDestino}
+  setEmailDestino={setEmailDestino}
+  enviandoCorreo={enviandoCorreo}
+  enviarCorreoProducto={enviarCorreoProductos}
+  totalProductos={productos.length}
+/>
+
     </Container>
 
   );
