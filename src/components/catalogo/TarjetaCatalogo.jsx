@@ -54,6 +54,7 @@ const TarjetaCatalogo = ({ producto, categoriaNombre }) => {
                     </Card.Title>
 
                     {descripcion && (
+                        <>  
                         <Card.Text className="text-muted small flex-grow-1">
                             {previsualizacionTexto}
                             {tieneMasTexto && (
@@ -61,13 +62,16 @@ const TarjetaCatalogo = ({ producto, categoriaNombre }) => {
                                     {" Leer más"}
                                 </span>
                             )}
+                            
+                            </Card.Text>
 
                             <div className="mt-2">
                                 <Badge bg="secondary" pill size="sm">
                                     {categoriaNombre || "Sin categoría"}
                                 </Badge>
                             </div>
-                        </Card.Text>
+                        
+                        </>
                     )}
                     <hr />
                     <div className="mt-auto pt-2">

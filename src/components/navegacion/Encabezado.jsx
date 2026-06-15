@@ -133,6 +133,16 @@ const Encabezado = () => {
               <strong>Ventas</strong>
             </Nav.Link>
 
+            {/* Opción para ir a Dashboard desde admin */}
+            <Nav.Link
+              onClick={() => manejarNavegacion("/dashboard")}
+              className={mostrarMenu ? "color-texto-marca" : "text-white"}
+            >
+              {mostrarMenu ? <i className="bi-person-lines-fill me-2"></i> : null}
+              <strong>Dashboards</strong>
+            </Nav.Link>
+
+            
             <Nav.Link onClick={() => setMostrarChatIA(true)} className="text-white">
               <i className="bi bi-robot me-2"></i>
             </Nav.Link>
