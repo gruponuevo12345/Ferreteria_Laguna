@@ -20,8 +20,8 @@ const App = () => {
       <Encabezado />
       <main className="margen-superior-main">
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<RutaProtegida><Inicio /></RutaProtegida>} />
+          <Route path="/" element={<Login />} />
+          <Route path="/inicio"element={<RutaProtegida><Inicio /></RutaProtegida>}/>
           <Route path="/categorias" element={<RutaProtegida><Categorias /></RutaProtegida>} />
           <Route path="/catalogo" element={<RutaProtegida><Catalogo /></RutaProtegida>} />
           <Route path="/productos" element={<RutaProtegida><Productos /></RutaProtegida>} />
