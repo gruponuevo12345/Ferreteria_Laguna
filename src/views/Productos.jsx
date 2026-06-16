@@ -157,6 +157,10 @@ const [enviandoCorreo, setEnviandoCorreo] = useState(false);
   }, [textoBusqueda, productos]);
 
   useEffect(() => {
+    setPaginaActual(1);
+  }, [textoBusqueda, registrosPorPagina]);
+
+  useEffect(() => {
     cargarCategorias();
     cargarProductos();
   }, []);
@@ -512,29 +516,40 @@ return texto;
 
   return (
     <Container className="mt-3">
-<Row className="align-items-center mb-3">
-  <Col xs={8} sm={8} md={8} lg={8} className="d-flex align-items-center">
-    <h3 className="mb-0">
-      <i className="bi-bookmark-plus-fill me-2"></i> Produtos
-    </h3>
-  </Col>
-  <Col xs={2} sm={2} md={2} lg={2} className="text-end">
-    <Button variant="primary" onClick={abrirModalCorreo} size="md">
-      <i className="bi bi-envelope"></i>
-      <span className="d-none d-lg-inline ms-2">Enviar por Correo</span>
-    </Button>
-  </Col>
-  <Col xs={2} sm={2} md={2} lg={2} className="text-end">
-    <Button
-      onClick={() => setMostrarModal(true)}
-      size="md"
-    >
-      <i className="bi-plus-lg"></i>
-      <span className="d-none d-lg-inline ms-2">Nuevo Producto</span>
-    </Button>
-  </Col>
-</Row>
+      <Row className="align-items-center mb-3">
+        <Col xs="auto" sm="7" md="7" lg="7" className="d-flex align-items-center">
+          <div className="titulo-pagina">
+            <div className="titulo-icono">
+              <i className="bi bi-box-seam-fill"></i>
+            </div>
 
+            <div>
+              <h2 className="mb-1">Productos</h2>
+              <p className="subtitulo-pagina mb-0">
+                Administra y organiza los productos de la ferretería
+              </p>
+            </div>
+          </div>
+        </Col>
+
+        <Col xs="auto" className="ms-auto d-flex gap-2">
+          <Button 
+            variant="primary" 
+            onClick={abrirModalCorreo} 
+            size="md"
+          >
+            <i className="bi bi-envelope"></i>
+            <span className="d-none d-lg-inline ms-2">Enviar por Correo</span>
+          </Button>
+          <Button
+            className="btn-nueva-categoria"
+            onClick={() => setMostrarModal(true)}
+          >
+            <i className="bi bi-plus-circle-fill"></i>
+            <span>Nuevo Producto</span>
+          </Button>
+        </Col>
+      </Row>
 
       <hr />
 
@@ -572,17 +587,6 @@ return texto;
         </Row>
       )}
 
-      {/* Paginación */}
-      {productosPaginados.length > 0 && (
-        <Paginacion
-          registrosPorPagina={registrosPorPagina}
-          totalRegistros={productosFiltrados.length}
-          paginaActual={paginaActual}
-          establecerPaginaActual={setPaginaActual}
-          establecerRegistrosPorPagina={setRegistrosPorPagina}
-        />
-      )}
-
       {/* Lista de productos filtrados */}
       {!cargando && productosPaginados.length > 0 && (
         <Row>
@@ -606,6 +610,17 @@ return texto;
             />
           </Col>
         </Row>
+      )}
+
+      {/* Paginación */}
+      {productosPaginados.length > 0 && (
+        <Paginacion
+          registrosPorPagina={registrosPorPagina}
+          totalRegistros={productosFiltrados.length}
+          paginaActual={paginaActual}
+          establecerPaginaActual={setPaginaActual}
+          establecerRegistrosPorPagina={setRegistrosPorPagina}
+        />
       )}
 
       {/* Modales */}

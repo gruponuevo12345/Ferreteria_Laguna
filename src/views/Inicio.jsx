@@ -207,7 +207,8 @@ const generarPdfCategorias = async () => {
     autoTable(pdf, {
       startY: 135,
       head: [["Categoría", "Monto"]],
-      body: filasCategoria
+      body: filasCategoria,
+      headStyles: { fillColor: [51, 7, 117], textColor: [255, 255, 255] }
     });
 
     // Descargar PDF

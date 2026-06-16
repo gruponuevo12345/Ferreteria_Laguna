@@ -25,47 +25,70 @@ const ModalRegistroCategoria = ({
       backdrop="static"
       keyboard={false}
       centered
+      size="lg"
     >
-      <Modal.Header closeButton>
-        <Modal.Title>Agregar Categoría</Modal.Title>
-      </Modal.Header>
+      <Modal.Header closeButton className="border-0 pb-0">
+  <div>
+    <Modal.Title className="fw-bold fs-2">
+      <i className="bi bi-tags-fill text-primary me-2"></i>
+      Nueva Categoría
+    </Modal.Title>
+
+    <small className="text-muted">
+      Registra una nueva categoría para organizar los productos
+    </small>
+  </div>
+</Modal.Header>
       <Modal.Body>
         <Form>
           
           <Form.Group className="mb-3">
-            <Form.Label>Nombre</Form.Label>
+            <Form.Label className="fw-semibold">
+  <i className="bi bi-bookmark-fill me-2 text-primary"></i>
+  Nombre
+</Form.Label>
             <Form.Control
-              type="text"
-              name="nombre_categoria"
-              value={nuevaCategoria.nombre_categoria}
-              onChange={manejoCambioInput}
-              placeholder="Ingresa el nombre"
-            />
+  type="text"
+  name="nombre_categoria"
+  value={nuevaCategoria.nombre_categoria}
+  onChange={manejoCambioInput}
+  placeholder="Ej. Herramientas Eléctricas"
+  className="py-2 rounded-3 shadow-sm"
+/>
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Descripción</Form.Label>
+            <Form.Label className="fw-semibold">
+  <i className="bi bi-card-text me-2 text-primary"></i>
+  Descripción
+</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
-              name="descripcion_categoria"
-              value={nuevaCategoria.descripcion_categoria}
-              onChange={manejoCambioInput}
-              placeholder="Ingresa la descripción"
-            />
+  as="textarea"
+  rows={4}
+  name="descripcion_categoria"
+  value={nuevaCategoria.descripcion_categoria}
+  onChange={manejoCambioInput}
+  placeholder="Describe la categoría..."
+  className="rounded-3 shadow-sm"
+/>
           </Form.Group>
 
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setMostrarModal(false)}>
+        <Button variant="light"
+  className="px-4 rounded-3 border" onClick={() => setMostrarModal(false)}>
+    <i className="bi bi-x-circle me-2"></i>
           Cancelar
         </Button>
+
         <Button
           variant="primary"
+          className="px-4 rounded-3 shadow-sm"
           onClick={handleRegistrar}
           disabled={nuevaCategoria.nombre_categoria.trim() === "" || deshabilitado}
         >
+          <i className="bi bi-check-circle me-2"></i>
           Guardar
         </Button>
       </Modal.Footer>

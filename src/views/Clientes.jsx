@@ -324,18 +324,28 @@ const Clientes = () => {
         <Container className="mt-3">
             {/* Título y botón Nueva Cliente */}
             <Row className="align-items-center mb-3">
-                <Col xs={9} sm={7} md={7} lg={7} className="d-flex align-items-center">
-                    <h3 className="mb-0">
-                        <i className="bi-bookmark-plus-fill me-2"></i> Clientes
-                    </h3>
+                <Col xs="auto" sm="7" md="7" lg="7" className="d-flex align-items-center">
+                    <div className="titulo-pagina">
+                        <div className="titulo-icono">
+                            <i className="bi bi-people-fill"></i>
+                        </div>
+
+                        <div>
+                            <h2 className="mb-1">Clientes</h2>
+                            <p className="subtitulo-pagina mb-0">
+                                Administra y organiza la información de los clientes de la ferretería
+                            </p>
+                        </div>
+                    </div>
                 </Col>
 
-                <Col xs={3} sm={5} md={5} lg={5} className="text-end">
-                    <Button onClick={() => setMostrarModal(true)} size="md">
-                        <i className="bi-plus-lg"></i>
-                        <span className="d-none d-sm-inline ms-2">
-                            Nuevo Cliente
-                        </span>
+                <Col xs="auto" className="ms-auto">
+                    <Button
+                        className="btn-nueva-categoria"
+                        onClick={() => setMostrarModal(true)}
+                    >
+                        <i className="bi bi-plus-circle-fill"></i>
+                        <span>Nuevo Cliente</span>
                     </Button>
                 </Col>
             </Row>
@@ -378,17 +388,6 @@ const Clientes = () => {
                 </Row>
             )}
 
-            {/* Paginación */}
-            {clientesPaginados.length > 0 && (
-                <Paginacion
-                    registrosPorPagina={registrosPorPagina}
-                    totalRegistros={clientesFiltrados.length}
-                    paginaActual={paginaActual}
-                    establecerPaginaActual={setPaginaActual}
-                    establecerRegistrosPorPagina={setRegistrosPorPagina}
-                />
-            )}
-
             {/* Lista de clientes filtrados */}
             {!cargando && clientesPaginados.length > 0 && (
                 <Row>
@@ -407,6 +406,17 @@ const Clientes = () => {
                         />
                     </Col>
                 </Row>
+            )}
+
+            {/* Paginación */}
+            {clientesPaginados.length > 0 && (
+                <Paginacion
+                    registrosPorPagina={registrosPorPagina}
+                    totalRegistros={clientesFiltrados.length}
+                    paginaActual={paginaActual}
+                    establecerPaginaActual={setPaginaActual}
+                    establecerRegistrosPorPagina={setRegistrosPorPagina}
+                />
             )}
 
 

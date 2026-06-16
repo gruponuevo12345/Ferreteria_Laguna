@@ -1,11 +1,34 @@
-.margen-superior-main {
-margin-top: 50px;
-padding: 20px;
+.margen-superior-main { 
+  margin-top: 60px; 
+  padding: 32px; 
+  background: #f1f5f9; 
+  min-height: 100vh;
+ }
+
+.color-navbar { 
+background: linear-gradient(135deg, #1e3a8a, #0284c7);
+backdrop-filter: blur(12px);
+ box-shadow: 0 8px 30px rgba(0,0,0,0.15); 
+ padding: 12px 0; 
+border-bottom: 1px solid rgba(255,255,255,0.15);
+ }
+
+ .nav-link {
+  border-radius: 10px;
+  padding: 8px 14px !important;
+  transition: all 0.25s ease;
 }
-.color-navbar {
-background-color: #1068db !important;
-background-image: linear-gradient(90deg, #121b96 0%, #2889b6 50%, #2697cc 100%);
+
+.nav-link:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
 }
+
+.brand-title {
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+}
+
 .color-texto-marca {
 color: #1e3d87 !important;
 font-size: 18px;
@@ -13,6 +36,27 @@ font-size: 18px;
 
 .boton-ancho-auto {
   width: auto;
+}
+
+.tarjeta-categoria-contenedor,
+.tarjeta-empleado-contenedor,
+.tarjeta-venta-contenedor {
+  border-radius: 20px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.tarjeta-categoria-contenedor:hover,
+.tarjeta-empleado-contenedor:hover,
+.tarjeta-venta-contenedor:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
 }
 
 /* ==================== TARJETAS CATEGORIAS ==================== */
@@ -51,6 +95,90 @@ font-size: 18px;
 }
 
 .tarjeta-categoria-botones-capa {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* ==================== TARJETAS CLIENTES ==================== */
+
+.tarjeta-cliente-contenedor {
+  position: relative;
+  overflow: hidden;
+}
+
+.tarjeta-cliente-cuerpo {
+  transition: opacity 150ms ease;
+}
+
+.tarjeta-cliente-cuerpo-activo {
+  opacity: 0.4;
+}
+
+.tarjeta-cliente-cuerpo-inactivo {
+  opacity: 1;
+}
+
+.tarjeta-cliente-placeholder-imagen {
+  height: 50px;
+  width: 50px;
+}
+
+.tarjeta-cliente-capa {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 8px;
+}
+
+.tarjeta-cliente-botones-capa {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* ==================== TARJETAS PRODUCTOS ==================== */
+
+.tarjeta-producto-contenedor {
+  position: relative;
+  overflow: hidden;
+}
+
+.tarjeta-producto-cuerpo {
+  transition: opacity 150ms ease;
+}
+
+.tarjeta-producto-cuerpo-activo {
+  opacity: 0.4;
+}
+
+.tarjeta-producto-cuerpo-inactivo {
+  opacity: 1;
+}
+
+.tarjeta-producto-placeholder-imagen {
+  height: 50px;
+  width: 50px;
+}
+
+.tarjeta-producto-capa {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 8px;
+}
+
+.tarjeta-producto-botones-capa {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 8px;
   padding: 6px;
@@ -169,3 +297,363 @@ font-size: 18px;
   background-position: center;
 }
 
+/*==================== TABLA CATEGORIAS ====================
+*/
+.tabla-wrapper {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0,0,0,.08);
+}
+
+.tabla-categorias {
+  width: 100%;
+  margin: 0;
+}
+
+.tabla-categorias thead th {
+  background: #294797 !important; /* azul oscuro */
+  color: white !important;
+  padding: 18px;
+  font-weight: 700;
+  border: none;
+}
+
+.tabla-categorias thead th:first-child {
+  border-top-left-radius: 18px;
+}
+
+.tabla-categorias thead th:last-child {
+  border-top-right-radius: 18px;
+}
+
+
+.tabla-categorias tbody td {
+  padding: 18px;
+  border-top: 1px solid #eef2f7;
+}
+
+.tabla-categorias tbody tr {
+  transition: all .2s ease;
+}
+
+.tabla-categorias tbody tr:hover {
+  background: #f8fbff;
+}
+
+.categoria-id {
+  background: #dbeafe;
+  color: #2563eb;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.acciones-botones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.acciones-botones .btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 10px;
+}
+
+/* ==================== TABLA CLIENTES ==================== */
+
+.tabla-clientes {
+  width: 100%;
+  margin: 0;
+}
+
+.tabla-clientes thead {
+  background: #1e3a8a;
+}
+
+.tabla-clientes thead th {
+   background: #294797 !important; /* azul oscuro */
+  color: white !important;
+  padding: 18px;
+  font-weight: 700;
+  border: none;
+}
+
+.tabla-clientes tbody td {
+  padding: 18px;
+  border-top: 1px solid #eef2f7;
+}
+
+.tabla-clientes tbody tr {
+  transition: all .2s ease;
+}
+
+.tabla-clientes tbody tr:hover {
+  background: #f8fbff;
+}
+
+.cliente-id {
+  background: #dbeafe;
+  color: #2563eb;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ==================== TABLA PRODUCTOS ==================== */
+
+.tabla-productos {
+  width: 100%;
+  margin: 0;
+}
+
+.tabla-productos thead {
+  background: #1e3a8a;
+}
+
+.tabla-productos thead th {
+  background: #294797 !important; /* azul oscuro */
+  color: white !important;
+  padding: 18px;
+  font-weight: 700;
+  border: none;
+}
+
+.tabla-productos tbody td {
+  padding: 18px;
+  border-top: 1px solid #eef2f7;
+}
+
+.tabla-productos tbody tr {
+  transition: all .2s ease;
+}
+
+.tabla-productos tbody tr:hover {
+  background: #f8fbff;
+}
+
+.producto-id {
+  background: #dbeafe;
+  color: #2563eb;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.titulo-pagina {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.titulo-icono {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e3a8a, #0284c7);
+  color: white;
+  font-size: 28px;
+  box-shadow: 0 10px 25px rgba(30, 58, 138, 0.25);
+}
+
+.subtitulo-pagina {
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* ==================== BOTON NUEVA CATEGORIA ==================== */
+
+.btn-nueva-categoria {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  border: none !important;
+  border-radius: 14px !important;
+  height: 42px;
+  padding: 0 20px !important;
+
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+
+  font-weight: 600 !important;
+  font-size: 14px;
+  color: white !important;
+
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+  transition: all 0.25s ease !important;
+}
+
+.btn-nueva-categoria:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(37, 99, 235, 0.35);
+}
+
+.btn-nueva-categoria i {
+  font-size: 20px;
+}
+
+/* ==================== BUSCADOR ==================== */
+
+.buscador-container {
+  display: flex;
+  align-items: center;
+  background: white;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: 1px solid #dbe3ee;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+}
+
+.buscador-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.buscador-container:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+}
+
+.buscador-icono {
+  font-size: 20px;
+  color: #64748b;
+  margin-right: 12px;
+}
+
+.buscador-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  color: #1e293b;
+}
+
+.buscador-input::placeholder {
+  color: #94a3b8;
+}
+
+/* ==================== TABLA VENTAS ==================== */
+
+.tabla-ventas {
+  width: 100%;
+  margin: 0;
+}
+
+.tabla-ventas thead {
+  background: #1e3a8a;
+}
+
+.tabla-ventas thead th {
+  background: #294797 !important; /* azul oscuro */
+  color: white !important;
+  padding: 18px;
+  font-weight: 700;
+  border: none;
+}
+
+.tabla-ventas thead th:first-child {
+  border-top-left-radius: 18px;
+}
+
+.tabla-ventas thead th:last-child {
+  border-top-right-radius: 18px;
+}
+
+.tabla-ventas tbody td {
+  padding: 18px;
+  border-top: 1px solid #eef2f7;
+}
+
+.tabla-ventas tbody tr {
+  transition: all .2s ease;
+}
+
+.tabla-ventas tbody tr:hover {
+  background: #f8fbff;
+}
+
+.venta-id {
+  background: #dbeafe;
+  color: #2563eb;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ==================== TABLA EMPLEADOS ==================== */
+
+.tabla-empleados {
+  width: 100%;
+  margin: 0;
+}
+
+.tabla-empleados thead {
+  background: #1e3a8a;
+}
+
+.tabla-empleados thead th {
+  background: #294797 !important; /* azul oscuro */
+  color: rgb(255, 255, 255) !important;
+  padding: 18px;
+  font-weight: 700;
+  border: none;
+}
+
+.tabla-empleados thead th:first-child {
+  border-top-left-radius: 18px;
+}
+
+.tabla-empleados thead th:last-child {
+  border-top-right-radius: 18px;
+}
+
+.tabla-empleados tbody td {
+  padding: 18px;
+  border-top: 1px solid #eef2f7;
+}
+
+.tabla-empleados tbody tr {
+  transition: all .2s ease;
+}
+
+.tabla-empleados tbody tr:hover {
+  background: #f8fbff;
+}
+
+.empleado-id {
+  background: #dbeafe;
+  color: #2563eb;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+
+.catalogo-banner{
+    background: linear-gradient(135deg,#1e3a8a, #0284c7);
+    color:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.12);
+}
+
+
+.producto-card{
+  transition: all 0.3s ease;
+}
+
+.producto-card:hover{
+  transform: translateY(-8px);
+}

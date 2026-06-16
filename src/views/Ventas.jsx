@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import { supabase } from "../database/supabaseconfig";
 import NotificacionOperacion from "../components/NotificacionOperacion";
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
@@ -177,6 +177,11 @@ const Ventas = () => {
         }
     }, [textoBusqueda, ventas]);
 
+    // Resetear paginación cuando cambia búsqueda o registros por página
+    useEffect(() => {
+        establecerPaginaActual(1);
+    }, [textoBusqueda, registrosPorPagina]);
+
     const abrirNuevaVenta = () => {
         resetFormulario();
         setMostrarFormulario(true);
@@ -296,21 +301,45 @@ const Ventas = () => {
 
     return (
         <Container className="mt-3">
+            {/* Título y botón Nueva Venta */}
             <Row className="align-items-center mb-3">
-                <Col xs={8} lg={8}>
-                    <h3 className="mb-0">
-                        <i className="bi bi-receipt-cutoff me-2"></i> Ventas
-                    </h3>
+                <Col xs={9} sm={7} md={7} lg={7} className="d-flex align-items-center">
+                    <div className="titulo-pagina">
+                        <div className="titulo-icono">
+                            <i className="bi bi-receipt-cutoff"></i>
+                        </div>
+                        <div>
+                            <h2 className="mb-1">Ventas</h2>
+                            <p className="subtitulo-pagina mb-0">
+                                Registra, visualiza y gestiona todas tus ventas
+                            </p>
+                        </div>
+                    </div>
                 </Col>
-                <Col xs={4} lg={4} className="text-end">
-                    <Button onClick={abrirNuevaVenta} size="md">
-                        <i className="bi bi-plus-lg"></i>
-                        <span className="d-none d-sm-inline ms-2">Nueva Venta</span>
+                <Col xs="auto" className="ms-auto">
+                    <Button
+                        className="btn-nueva-categoria"
+                        onClick={abrirNuevaVenta}
+                    >
+                        <i className="bi bi-plus-circle-fill"></i>
+                        <span>Nueva Venta</span>
                     </Button>
                 </Col>
             </Row>
+
             <hr />
 
+            {/* Spinner mientras se cargan las ventas */}
+            {cargando && (
+                <Row className="text-center my-5">
+                    <Col>
+                        <Spinner animation="border" variant="success" size="lg" />
+                        <p className="mt-3 text-muted">Cargando ventas...</p>
+                    </Col>
+                </Row>
+            )}
+
+            {/* Cuadro de búsqueda debajo de la línea divisoria */}
             <Row className="mb-4">
                 <Col md={6} lg={5}>
                     <CuadroBusquedas
@@ -321,15 +350,26 @@ const Ventas = () => {
                 </Col>
             </Row>
 
-            {cargando ? (
-                <Row className="text-center my-5">
-                    <Spinner animation="border" variant="success" size="lg" />
-                    <p className="mt-3 text-muted">Cargando ventas...</p>
+            {/* Mensaje de no coincidencias solo cuando hay búsqueda y no hay resultados */}
+            {!cargando && textoBusqueda.trim() && ventasFiltradas.length === 0 && (
+                <Row className="mb-4">
+                    <Col>
+                        <Alert variant="info" className="text-center">
+                            <i className="bi bi-info-circle me-2"></i>
+                            No se encontraron ventas que coincidan con "{textoBusqueda}".
+                        </Alert>
+                    </Col>
                 </Row>
-            ) : (
+            )}
+
+            {/* Lista de ventas filtradas */}
+            {!cargando && ventasPaginadas.length > 0 && (
                 <Row>
-                    <Col xs={12} className="d-lg-none">
-                        <TarjetaVenta ventas={ventasPaginadas} abrirEdicion={abrirEdicion} />
+                    <Col xs={12} sm={12} md={12} className="d-lg-none">
+                        <TarjetaVenta
+                            ventas={ventasPaginadas}
+                            abrirEdicion={abrirEdicion}
+                        />
                     </Col>
                     <Col lg={12} className="d-none d-lg-block">
                         <TablaVentas
@@ -341,7 +381,8 @@ const Ventas = () => {
                 </Row>
             )}
 
-            {ventasFiltradas.length > 0 && (
+            {/* Paginación */}
+            {ventasPaginadas.length > 0 && (
                 <Paginacion
                     registrosPorPagina={registrosPorPagina}
                     totalRegistros={ventasFiltradas.length}

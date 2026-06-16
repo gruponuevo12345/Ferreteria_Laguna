@@ -86,20 +86,29 @@ const obtenerNombreCategoria = (idCategoria) => {
     return cat ? cat.nombre_categoria : "Sin categoría";
 };
 
+
+
     return (
 
       <div className="mt-3 px-1">
 
-  <Row className="text-center mb-1">
-    <Col>
-      <p className="lead text-muted">
-        Nuestros productos están disponibles para su compra. Explora nuestro catálogo y encuentra lo que necesitas.
-      </p>
-    </Col>
-  </Row>
+  <Row className="mb-4">
+  <Col>
+    <div className="catalogo-banner">
+      <h1 className="fw-bold mb-2">
+        Catálogo de Productos
+      </h1>
 
-  <Row className="mb-1 align-items-end">
-    <Col md={4} lg={3} className="mb-2">
+      <p className="mb-0">
+        Encuentra herramientas, materiales eléctricos,
+        pinturas y mucho más para tus proyectos.
+      </p>
+    </div>
+  </Col>
+</Row>
+
+  <Row className="mb-4 p-3 bg-white rounded-4 shadow-sm align-items-end">
+    <Col md={3} lg={3} className="mb-2">
       <Form.Group controlId="filtroCategoria">
         <Form.Select
           value={categoriaSeleccionada}
@@ -126,6 +135,14 @@ const obtenerNombreCategoria = (idCategoria) => {
     </Col>
   </Row>
 
+  <Row className="mb-3">
+  <Col>
+    <h6 className="text-muted">
+      Mostrando {productosFiltrados.length} productos
+    </h6>
+  </Col>
+</Row>
+
   {/* Estados */}
   {cargando && (
     <Row className="text-center my-5">
@@ -145,17 +162,25 @@ const obtenerNombreCategoria = (idCategoria) => {
 
   {/* Productos */}
   {!cargando && productosFiltrados.length > 0 && (
-    <Row className="g-3">
-      {productosFiltrados.map((producto) => (
-        <Col xs={6} sm={6} md={4} lg={3} key={producto.id_producto}>
-          <TarjetaCatalogo
-            producto={producto}
-            categoriaNombre={obtenerNombreCategoria(producto.id_categoria)}
-          />
-        </Col>
-      ))}
-    </Row>
+    <Row className="g-4">
+  {productosFiltrados.map((producto) => (
+    <Col
+      xs={6}
+      sm={6}
+      md={4}
+      lg={3}
+      key={producto.id_producto}
+      className="producto-card"
+    >
+      <TarjetaCatalogo
+        producto={producto}
+        categoriaNombre={obtenerNombreCategoria(producto.id_categoria)}
+      />
+    </Col>
+  ))}
+</Row>
   )}
+
 
 </div>
 

@@ -66,7 +66,7 @@ const TarjetaVenta = ({
                     </Col>
                     <Col xs={6} className="text-start">
                       <div className="fw-semibold text-truncate">
-                        {venta.clientes?.nombre_cliente} {venta.clientes?.apellido_cliente}
+                        {venta.clientes?.primer_nombre} {venta.clientes?.primer_apellido}
                       </div>
                       <div className="small text-muted text-truncate">
                         {new Date(venta.fecha_venta).toLocaleString('es-NI')}
@@ -74,7 +74,7 @@ const TarjetaVenta = ({
                     </Col>
                     <Col xs={4} className="text-end">
                       <div className="fw-bold text-success">
-                        C$ {parseFloat(venta.total || 0).toFixed(2)}
+                        C$ {parseFloat(venta.total_venta || 0).toFixed(2)}
                       </div>
                     </Col>
                   </Row>
@@ -98,6 +98,7 @@ const TarjetaVenta = ({
                           abrirEdicion(venta);
                           setIdTarjetaActiva(null);
                         }}
+                        aria-label={`Editar venta ${venta.id_venta}`}
                       >
                         <i className="bi bi-pencil"></i>
                       </Button>

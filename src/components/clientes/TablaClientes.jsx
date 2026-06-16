@@ -23,56 +23,68 @@ const TablaClientes = ({ clientes, abrirModalEdicion, abrirModalEliminacion }) =
                     <Spinner animation="border" variant="success" role="status" />
                 </div>
             ) : (
-                <Table striped borderless hover responsive size="sm">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>primer_nombre</th>
-                            <th>segundo_nombre</th>
-                            <th>primer_apellido</th>
-                            <th>segundo_apellido</th>
-                            <th>celular</th>
-                             <th>direccion</th>
-                              <th>cedula</th>
-                            <th className="d-none d-md-table-cell">Descripción</th>
-                            <th className="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {clientes.map((cliente) => (
-                            <tr key={cliente.id_cliente}>
-                                <td>{cliente.id_cliente}</td>
-                                <td>{cliente.primer_nombre}</td>
-                                <td>{cliente.segundo_nombre}</td>
-                                <td>{cliente.primer_apellido}</td>
-                                <td>{cliente.segundo_apellido}</td>
-                                <td>{cliente.celular}</td>
-                                <td>{cliente.direccion}</td>
-                                <td>{cliente.cedula}</td>
-                                <td className="d-none d-md-table-cell">{cliente.primer_nombre}</td>
-                                <td className="text-center">
-                                    <Button
-                                        variant="outline-warning"
-                                        size="sm"
-                                        className="m-1"
-                                        onClick={() => abrirModalEdicion(cliente)}
-                                    >
-                                        <i className="bi bi-pencil"></i>
-                                    </Button>
-
-                                    <Button
-                                        variant="outline-danger"
-                                        size="sm"
-                                        onClick={() => abrirModalEliminacion(cliente)}
-                                    >
-
-                                        <i className="bi bi-trash"></i>
-                                    </Button>
-                                </td>
+                <div className="tabla-wrapper">
+                    <Table responsive className="tabla-clientes align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Teléfono</th>
+                                <th className="d-none d-md-table-cell">Dirección</th>
+                                <th className="d-none d-md-table-cell">Cédula</th>
+                                <th className="text-center">Acciones</th>
                             </tr>
-                        ))
-                        }</tbody>
-                </Table>
+                        </thead>
+
+                        <tbody>
+                            {clientes.map((cliente) => (
+                                <tr key={cliente.id_cliente}>
+                                    <td>
+                                        <span className="cliente-id">
+                                            #{cliente.id_cliente}
+                                        </span>
+                                    </td>
+
+                                    <td className="fw-semibold">
+                                        {cliente.primer_nombre} {cliente.primer_apellido}
+                                    </td>
+
+                                    <td>
+                                        {cliente.celular}
+                                    </td>
+
+                                    <td className="d-none d-md-table-cell text-muted">
+                                        {cliente.direccion}
+                                    </td>
+
+                                    <td className="d-none d-md-table-cell text-muted">
+                                        {cliente.cedula}
+                                    </td>
+
+                                    <td>
+                                        <div className="acciones-botones">
+                                            <Button
+                                                variant="warning"
+                                                size="sm"
+                                                onClick={() => abrirModalEdicion(cliente)}
+                                            >
+                                                <i className="bi bi-pencil"></i>
+                                            </Button>
+
+                                            <Button
+                                                variant="danger"
+                                                size="sm"
+                                                onClick={() => abrirModalEliminacion(cliente)}
+                                            >
+                                                <i className="bi bi-trash"></i>
+                                            </Button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </div>
             )}
         </>
     );

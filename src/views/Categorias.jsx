@@ -343,19 +343,30 @@ Descripción: ${categoria.descripcion_categoria}
       {/* Título y botón Nueva Categoría */}
       <Row className="align-items-center mb-3">
         <Col xs={9} sm={7} md={7} lg={7} className="d-flex align-items-center">
-          <h3 className="mb-0">
-            <i className="bi-bookmark-plus-fill me-2"></i> Categorías
-          </h3>
+          <div className="titulo-pagina">
+  <div className="titulo-icono">
+    <i className="bi bi-tags-fill"></i>
+  </div>
+
+  <div>
+    <h2 className="mb-1">Categorías</h2>
+    <p className="subtitulo-pagina mb-0">
+      Administra y organiza las categorías de productos de la ferretería
+    </p>
+  </div>
+</div>
         </Col>
 
-        <Col xs={3} sm={5} md={5} lg={5} className="text-end">
-          <Button onClick={() => setMostrarModal(true)} size="md">
-            <i className="bi-plus-lg"></i>
-            <span className="d-none d-sm-inline ms-2">
-              Nueva Categoría
-            </span>
-          </Button>
+        <Col xs="auto" className="ms-auto">
+          <Button
+  className="btn-nueva-categoria"
+  onClick={() => setMostrarModal(true)}
+>
+  <i className="bi bi-plus-circle-fill"></i>
+  <span>Nueva Categoría</span>
+</Button>
         </Col>
+
       </Row>
 
       <hr />
@@ -396,16 +407,7 @@ Descripción: ${categoria.descripcion_categoria}
         </Row>
       )}
 
-      {/* Paginación */}
-      {categoriasPaginadas.length > 0 && (
-        <Paginacion
-          registrosPorPagina={registrosPorPagina}
-          totalRegistros={categoriasFiltradas.length}
-          paginaActual={paginaActual}
-          establecerPaginaActual={setPaginaActual}
-          establecerRegistrosPorPagina={setRegistrosPorPagina}
-        />
-      )}
+      
 
       {/* Lista de categorías filtradas */}
       {!cargando && categoriasPaginadas.length > 0 && (
@@ -428,6 +430,17 @@ Descripción: ${categoria.descripcion_categoria}
             />
           </Col>
         </Row>
+      )}
+
+      {/* Paginación */}
+      {categoriasPaginadas.length > 0 && (
+        <Paginacion
+          registrosPorPagina={registrosPorPagina}
+          totalRegistros={categoriasFiltradas.length}
+          paginaActual={paginaActual}
+          establecerPaginaActual={setPaginaActual}
+          establecerRegistrosPorPagina={setRegistrosPorPagina}
+        />
       )}
 
 

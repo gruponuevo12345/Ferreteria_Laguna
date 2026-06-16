@@ -192,27 +192,35 @@ const Empleados = () => {
 
   return (
     <Container className="mt-3">
+      {/* Título y botón Nuevo Empleado */}
       <Row className="align-items-center mb-3">
-        <Col>
-          <h3><i className="bi-person-badge-fill me-2"></i>Empleados</h3>
+        <Col xs={9} sm={7} md={7} lg={7} className="d-flex align-items-center">
+          <div className="titulo-pagina">
+            <div className="titulo-icono">
+              <i className="bi bi-person-badge-fill"></i>
+            </div>
+            <div>
+              <h2 className="mb-1">Empleados</h2>
+              <p className="subtitulo-pagina mb-0">
+                Administra y organiza la información de los empleados
+              </p>
+            </div>
+          </div>
         </Col>
-        <Col className="text-end">
-          <Button onClick={() => setMostrarModal(true)}>
-            <i className="bi-plus-lg me-1"></i>Nuevo Empleado
+        <Col xs="auto" className="ms-auto">
+          <Button
+            className="btn-nueva-categoria"
+            onClick={() => setMostrarModal(true)}
+          >
+            <i className="bi bi-plus-circle-fill"></i>
+            <span>Nuevo Empleado</span>
           </Button>
         </Col>
       </Row>
 
-      <Row className="mb-4">
-        <Col md={6}>
-          <CuadroBusquedas
-            textoBusqueda={textoBusqueda}
-            manejarCambioBusqueda={(e) => setTextoBusqueda(e.target.value)}
-          />
-        </Col>
-      </Row>
+      <hr />
 
-      {/* Spinner de carga inicial */}
+      {/* Spinner mientras se cargan los empleados */}
       {cargando && (
         <Row className="text-center my-5">
           <Col>
@@ -222,7 +230,18 @@ const Empleados = () => {
         </Row>
       )}
 
-      {/* Alert cuando no hay coincidencias en la búsqueda */}
+      {/* Cuadro de búsqueda debajo de la línea divisoria */}
+      <Row className="mb-4">
+        <Col md={6} lg={5}>
+          <CuadroBusquedas
+            textoBusqueda={textoBusqueda}
+            manejarCambioBusqueda={(e) => setTextoBusqueda(e.target.value)}
+            placeholder="Buscar por nombre, email o cargo..."
+          />
+        </Col>
+      </Row>
+
+      {/* Mensaje de no coincidencias solo cuando hay búsqueda y no hay resultados */}
       {!cargando && textoBusqueda.trim() && empleadosFiltrados.length === 0 && (
         <Row className="mb-4">
           <Col>
@@ -234,10 +253,10 @@ const Empleados = () => {
         </Row>
       )}
 
-      {/* Mostrar tabla o tarjetas solo cuando hay resultados y ya cargó */}
+      {/* Lista de empleados filtrados */}
       {!cargando && empleadosFiltrados.length > 0 && (
         <Row>
-          <Col xs={12} className="d-lg-none">
+          <Col xs={12} sm={12} md={12} className="d-lg-none">
             <TarjetaEmpleado
               empleados={empleadosFiltrados}
               abrirModalEdicion={abrirModalEdicion}

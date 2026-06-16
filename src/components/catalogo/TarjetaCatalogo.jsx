@@ -31,10 +31,15 @@ const TarjetaCatalogo = ({ producto, categoriaNombre }) => {
                         <img
                             src={producto.url_imagen}
                             alt={producto.nombre_producto}
-                            className="card-img-top object-fit-cover"
+                            className="card-img-top"
                             loading="lazy"
-                            style={{ transition: "transform 0.4s" }}
-                            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
+                            style={{
+                                objectFit: "contain",
+                                padding: "15px",
+                                backgroundColor: "#f8f9fa",
+                                transition: "transform 0.4s"
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
                             onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                         />
                     ) : (
@@ -54,23 +59,23 @@ const TarjetaCatalogo = ({ producto, categoriaNombre }) => {
                     </Card.Title>
 
                     {descripcion && (
-                        <>  
-                        <Card.Text className="text-muted small flex-grow-1">
-                            {previsualizacionTexto}
-                            {tieneMasTexto && (
-                                <span className="text-primary fw-medium ms-1">
-                                    {" Leer más"}
-                                </span>
-                            )}
-                            
+                        <>
+                            <Card.Text className="text-muted small flex-grow-1">
+                                {previsualizacionTexto}
+                                {tieneMasTexto && (
+                                    <span className="text-primary fw-medium ms-1">
+                                        {" Leer más"}
+                                    </span>
+                                )}
+
                             </Card.Text>
 
                             <div className="mt-2">
-                                <Badge bg="secondary" pill size="sm">
+                                <Badge bg="primary" pill className="px-3 py-2">
                                     {categoriaNombre || "Sin categoría"}
                                 </Badge>
                             </div>
-                        
+
                         </>
                     )}
                     <hr />
@@ -118,9 +123,27 @@ const TarjetaCatalogo = ({ producto, categoriaNombre }) => {
                                 </Badge>
                             </div>
 
-                            <h3 className="text-success fw-bold mb-4">
-                                C${parseFloat(producto.precio_unitario).toFixed(1)}
+                            <div className="mt-auto">
+                                <Button
+                                    variant="outline-primary"
+                                    className="w-90 rounded-pill"
+                                >
+                                    Ver detalles
+                                </Button>
+                            </div>
+
+                            <hr />
+
+                            <div className="d-flex justify-content-between align-items-center"></div>
+
+                            <h3 className="fw-bold text-success mb-0">
+                                C$ {parseFloat(producto.precio_unitario).toFixed(2)}
                             </h3>
+
+                            <small className="text-muted">
+                                Precio unitario
+                            </small>
+
 
                             {descripcion && (
                                 <>

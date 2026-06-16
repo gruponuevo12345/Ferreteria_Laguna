@@ -25,108 +25,144 @@ const ModalRegistroCliente = ({
             backdrop="static"
             keyboard={false}
             centered
+            size="lg"
         >
-            <Modal.Header closeButton>
-                <Modal.Title>Agregar Cliente</Modal.Title>
+            <Modal.Header closeButton className="border-0 pb-0">
+                <div>
+                    <Modal.Title className="fw-bold fs-2">
+                        <i className="bi bi-person-plus-fill text-primary me-2"></i>
+                        Nuevo Cliente
+                    </Modal.Title>
+                    <small className="text-muted">
+                        Registra un nuevo cliente para organizar tu base de datos
+                    </small>
+                </div>
             </Modal.Header>
             <Modal.Body>
                 <Form>
-
                     <Form.Group className="mb-3">
-                        <Form.Label>Nombre</Form.Label>
+                        <Form.Label className="fw-semibold">
+                            <i className="bi bi-person-fill me-2 text-primary"></i>
+                            Nombre
+                        </Form.Label>
                         <Form.Control
                             type="text"
                             name="primer_nombre"
                             value={nuevoCliente.primer_nombre}
                             onChange={manejoCambioInput}
-                            placeholder="Nombre"
+                            placeholder="Ej. Juan"
+                            className="py-2 rounded-3 shadow-sm"
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>segundo_nombre</Form.Label>
+                        <Form.Label className="fw-semibold">
+                            <i className="bi bi-person-fill me-2 text-primary"></i>
+                            Segundo Nombre (Opcional)
+                        </Form.Label>
                         <Form.Control
-                            as="textarea"
-                            rows={3}
+                            type="text"
                             name="segundo_nombre"
                             value={nuevoCliente.segundo_nombre}
                             onChange={manejoCambioInput}
-                            placeholder="segundo nombre"
+                            placeholder="Ej. Carlos"
+                            className="py-2 rounded-3 shadow-sm"
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>primer_apellido</Form.Label>
+                        <Form.Label className="fw-semibold">
+                            <i className="bi bi-person-fill me-2 text-primary"></i>
+                            Apellido
+                        </Form.Label>
                         <Form.Control
-                            as="textarea"
-                            rows={3}
+                            type="text"
                             name="primer_apellido"
                             value={nuevoCliente.primer_apellido}
                             onChange={manejoCambioInput}
-                            placeholder="primer apellido"
+                            placeholder="Ej. García"
+                            className="py-2 rounded-3 shadow-sm"
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>segundo_apellido</Form.Label>
+                        <Form.Label className="fw-semibold">
+                            <i className="bi bi-person-fill me-2 text-primary"></i>
+                            Segundo Apellido (Opcional)
+                        </Form.Label>
                         <Form.Control
-                            as="textarea"
-                            rows={3}
+                            type="text"
                             name="segundo_apellido"
                             value={nuevoCliente.segundo_apellido}
                             onChange={manejoCambioInput}
-                            placeholder="segundo apellido"
+                            placeholder="Ej. López"
+                            className="py-2 rounded-3 shadow-sm"
                         />
                     </Form.Group>
 
-
                     <Form.Group className="mb-3">
-                        <Form.Label>celular</Form.Label>
+                        <Form.Label className="fw-semibold">
+                            <i className="bi bi-telephone-fill me-2 text-primary"></i>
+                            Celular
+                        </Form.Label>
                         <Form.Control
-                            as="textarea"
-                            rows={3}
+                            type="tel"
                             name="celular"
                             value={nuevoCliente.celular}
                             onChange={manejoCambioInput}
-                            placeholder="celular"
+                            placeholder="Ej. +505 8888 8888"
+                            className="py-2 rounded-3 shadow-sm"
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>direccion</Form.Label>
+                        <Form.Label className="fw-semibold">
+                            <i className="bi bi-house-fill me-2 text-primary"></i>
+                            Dirección
+                        </Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={3}
                             name="direccion"
                             value={nuevoCliente.direccion}
                             onChange={manejoCambioInput}
-                            placeholder="direccion"
+                            placeholder="Ej. Calle Principal, Casa 123"
+                            className="rounded-3 shadow-sm"
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label>cedula</Form.Label>
+                        <Form.Label className="fw-semibold">
+                            <i className="bi bi-card-text me-2 text-primary"></i>
+                            Cédula
+                        </Form.Label>
                         <Form.Control
-                            as="textarea"
-                            rows={3}
+                            type="text"
                             name="cedula"
                             value={nuevoCliente.cedula}
                             onChange={manejoCambioInput}
-                            placeholder="cedula"
+                            placeholder="Ej. 12345678-9"
+                            className="py-2 rounded-3 shadow-sm"
                         />
                     </Form.Group>
-
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => setMostrarModal(false)}>
+                <Button 
+                    variant="light"
+                    className="px-4 rounded-3 border" 
+                    onClick={() => setMostrarModal(false)}
+                >
+                    <i className="bi bi-x-circle me-2"></i>
                     Cancelar
                 </Button>
                 <Button
                     variant="primary"
+                    className="px-4 rounded-3 shadow-sm"
                     onClick={handleRegistrar}
                     disabled={nuevoCliente.primer_nombre.trim() === "" || deshabilitado}
                 >
+                    <i className="bi bi-check-circle me-2"></i>
                     Guardar
                 </Button>
             </Modal.Footer>

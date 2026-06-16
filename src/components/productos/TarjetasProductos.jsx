@@ -125,7 +125,7 @@ const TarjetaProductos = ({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Button
-                        variant="outline-warning"
+                        variant="warning"
                         size="sm"
                         onClick={() => {
                           abrirModalEdicion(producto);
@@ -137,7 +137,7 @@ const TarjetaProductos = ({
                       </Button>
 
                       <Button
-                        variant="outline-danger"
+                        variant="danger"
                         size="sm"
                         onClick={() => {
                           abrirModalEliminacion(producto);

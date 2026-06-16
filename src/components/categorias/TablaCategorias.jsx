@@ -23,65 +23,76 @@ const TablaCategorias = ({ categorias, abrirModalEdicion, abrirModalEliminacion,
                     <Spinner animation="border" variant="success" role="status" />
                 </div>
             ) : (
-                <Table striped borderless hover responsive size="sm">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th className="d-none d-md-table-cell">Descripción</th>
-                            <th className="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {categorias.map((categoria) => (
-                            <tr key={categoria.id_categoria}>
-                                <td>{categoria.id_categoria}</td>
-                                <td>{categoria.nombre_categoria}</td>
-                                <td className="d-none d-md-table-cell">{categoria.descripcion_categoria}</td>
-                                <td className="text-center">
-                                    <Button
-                                        variant="outline-warning"
-                                        size="sm"
-                                        className="m-1"
-                                        onClick={() => abrirModalEdicion(categoria)}
-                                    >
-                                        <i className="bi bi-pencil"></i>
-                                    </Button>
+    <div className="tabla-wrapper">
+        <Table responsive className="tabla-categorias align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th className="d-none d-md-table-cell">Descripción</th>
+                    <th className="text-center">Acciones</th>
+                </tr>
+            </thead>
 
-                                    <Button
-                                        variant="outline-danger"
-                                        size="sm"
-                                        onClick={() => abrirModalEliminacion(categoria)}
-                                    >
+            <tbody>
+                {categorias.map((categoria) => (
+                    <tr key={categoria.id_categoria}>
+                        <td>
+                            <span className="categoria-id">
+                                #{categoria.id_categoria}
+                            </span>
+                        </td>
 
-                                        <i className="bi bi-trash"></i>
-                                    </Button>
+                        <td className="fw-semibold">
+                            {categoria.nombre_categoria}
+                        </td>
 
-                                    <Button
-                                        variant="outline-primary"
-                                        size="sm"
-                                        className="m-1"
-                                        onClick={() => generarPDFCategoria(categoria)}
-                                    >
-                                        <i className="bi bi-file-earmark-pdf"></i>
-                                    </Button>
+                        <td className="d-none d-md-table-cell text-muted">
+                            {categoria.descripcion_categoria}
+                        </td>
 
-                                    <Button
-                                        variant="outline-success"
-                                        size="sm"
-                                        className="m-1"
-                                        onClick={() => copiarCategoria(categoria)}
-                                        title="Copiar al portapapeles"
-                                    >
-                                        <i className="bi bi-clipboard"></i>
-                                    </Button>
+                        <td>
+                            <div className="acciones-botones">
+                                <Button
+                                    variant="warning"
+                                    size="sm"
+                                    onClick={() => abrirModalEdicion(categoria)}
+                                >
+                                    <i className="bi bi-pencil"></i>
+                                </Button>
 
-                                </td>
-                            </tr>
-                        ))
-                        }</tbody>
-                </Table>
-            )}
+                                <Button
+                                    variant="danger"
+                                    size="sm"
+                                    onClick={() => abrirModalEliminacion(categoria)}
+                                >
+                                    <i className="bi bi-trash"></i>
+                                </Button>
+
+                                <Button
+                                    variant="primary"
+                                    size="sm"
+                                    onClick={() => generarPDFCategoria(categoria)}
+                                >
+                                    <i className="bi bi-file-earmark-pdf"></i>
+                                </Button>
+
+                                <Button
+                                    variant="success"
+                                    size="sm"
+                                    onClick={() => copiarCategoria(categoria)}
+                                >
+                                    <i className="bi bi-clipboard"></i>
+                                </Button>
+                            </div>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </Table>
+    </div>
+)
+            }
         </>
     );
 };
