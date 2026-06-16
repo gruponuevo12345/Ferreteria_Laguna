@@ -55,8 +55,7 @@ const Login = () => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    background:
-      "linear-gradient(rgba(0,40,120,.75), rgba(0,40,120,.75)), url('src/assets/FondoFerreteria.jpg')",
+    background: `linear-gradient(rgba(0,40,120,.75),rgba(0,40,120,.75)), url(${FondoFerreteria})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     overflow: "hidden",
